@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Główny motyw aplikacji -->
+    <style name="Theme.PhishingDetectorApp" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Czarny ekran w tle przed Compose -->
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <!-- Motyw używany przez SplashActivity -->
+    <style name="Theme.PhishingDetectorApp.Splash" parent="Theme.PhishingDetectorApp">
+        <!-- Tło splash = czarne (żadnych ikon!) -->
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+</resources>
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Zezwalamy na nieszyfrowane (HTTP) tylko do hosta emulatora -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">192.168.0.112</domain>
+    </domain-config>
+    <!-- Jeśli chcesz globalnie (dla wszystkich hostów), odkomentuj base-config: -->
+    <!--
+    <base-config cleartextTrafficPermitted="true"/>
+    -->
+</network-security-config>
