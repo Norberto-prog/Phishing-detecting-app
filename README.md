@@ -1,66 +1,151 @@
-# Phishing-detecting-app # SpamCheck
-engineering project
+### **Szczegółowy plan na pierwszy tydzień**
 
-## 📍 Overview  
-The **SpamCheck** project is a comprehensive system designed to detect phishing messages in both **email** and **SMS** formats. This project consists of three main modules: a **machine learning model** for text classification, a **REST API** for serving the model, and a **mobile Android application** built with Kotlin, enabling users to easily check if a message is phishing or not. The system works efficiently with a response time of less than **500ms**.
 
----
+Przykładowy harmonogram pracy (4 tygodnie)
+1. Tydzień 1: Przygotowanie środowiska i danych
+Skonfiguruj Android Studio i projekt w Kotlinie/Java.
+Przygotuj dataset phishingowych e-maili i przeszkol model ML w Pythonie.
+Skonwertuj model na TensorFlow Lite.
+2. Tydzień 2: Implementacja analizy treści
+Zaimplementuj funkcję do wgrywania plików .eml.
+Stwórz moduł parsujący e-maile: wyciąganie treści, linków, słów kluczowych.
+3. Tydzień 3: Integracja z modelem ML
+Wgraj model TensorFlow Lite do aplikacji Android.
+Dodaj funkcję klasyfikacji wiadomości (bezpieczne/phishingowe).
+4. Tydzień 4: Interfejs użytkownika i testowanie
+Zaprojektuj prosty interfejs:
+Ekran główny: przycisk „Wgraj e-mail”.
+Ekran wyników: lista podejrzanych elementów.
+5. Przetestuj aplikację na emulatorze i urządzeniach fizycznych.
 
-## 💼 **Project Details**
 
-### **Main Features:**
-- **AI-based Classification:** The system uses machine learning models, such as **Naive Bayes** and **MLP**, to classify emails and SMS as either legitimate ("ham") or phishing ("spam").
-- **Mobile Application:** Built in **Kotlin**, it allows users to input email or SMS content and checks whether the message is legitimate or phishing.
-- **REST API:** The server-side part is implemented using **FastAPI** and serves the classification model via a POST request, providing results with confidence scores.
-- **Efficiency:** The application is designed to be lightweight, offering **quick response times** for checking messages.
+# C:\Users\norbi\AppData\Local\Programs\Python\Python312\python --version
 
----
 
-## 💻 **Technologies Used**
-
-### **Machine Learning (ML):**
-- **Python**
-  - **NLTK**: Natural language processing (NLP) library used for tokenization and preprocessing.
-  - **Scikit-learn**: Library for building and evaluating the ML models (Naive Bayes, MLP).
-  - **Pandas**, **Numpy**: For data manipulation and processing.
-  - **Joblib**: For saving the trained ML model.
-  - **Deep_Translator**: For automating text translations when needed.
-
-### **Backend:**
-- **FastAPI**: Framework for creating the REST API, ensuring fast, efficient communication with the mobile app.
-- **Uvicorn**: A lightning-fast ASGI server to run the FastAPI application.
-
-### **Frontend (Mobile Application):**
-- **Kotlin**: The primary language for building the Android app.
-- **Jetpack Compose**: For building modern, responsive UI in Android.
+#### **Cel tygodnia:**
+1. Przygotowanie środowiska programistycznego.
+2. Pobranie i przygotowanie danych (dataset phishingowych e-maili).
+3. Stworzenie modelu uczenia maszynowego na komputerze i skonwertowanie go na TensorFlow Lite.
 
 ---
 
-## 🚀 **How It Works**
+### **Dzień 1: Przygotowanie środowiska**
+#### **Kroki:**
+1. **Zainstaluj Android Studio:**
+   - Pobierz i zainstaluj [Android Studio](https://developer.android.com/studio).
+   - Utwórz nowy projekt:
+     - Typ projektu: „Empty Activity”.
+     - Język: Kotlin (lub Java, jeśli preferujesz).
+     - Minimalna wersja SDK: Android 8.0 (API 26) lub wyższa.
 
-### **Text Classification Model**
-1. **Data Collection**: A dataset of over 2000 examples of each class (ham and spam) is collected for training the model.
-2. **Preprocessing**: The data undergoes tokenization, removal of stop-words, and other text-cleaning operations.
-3. **Model Training**: Two machine learning models—**Naive Bayes** and **MLP (Multi-Layer Perceptron)**—are trained to classify the input text. The model with the highest **F1-score** is selected for deployment.
-4. **API Endpoint**: The trained model is deployed through a REST API, allowing the mobile app to send messages for classification. The system responds with the label (ham/spam) and confidence score.
+2. **Zainstaluj narzędzia ML na komputerze:**
+   - Upewnij się, że masz zainstalowany Python oraz biblioteki:
+     ```bash
+     pip install numpy pandas scikit-learn tensorflow
+     ```
+   - Dodatkowe narzędzia:
+     - `Jupyter Notebook` (opcjonalnie, do analizy danych).
 
-### **Mobile Application**
-1. **UI**: Users can input email or SMS content into the app and hit a "check" button to classify the message.
-2. **Server Communication**: The app sends the content to the FastAPI backend for classification, receives the result, and displays whether the message is phishing or legitimate.
-3. **Additional Features**: Users can see a confidence score and statistical graphs for phishing detection.
+3. **Skonfiguruj środowisko TensorFlow Lite w Android Studio:**
+   - Dodaj zależność w `build.gradle` projektu:
+     ```gradle
+     implementation 'org.tensorflow:tensorflow-lite:2.12.0'
+     ```
+
+4. **Testowe uruchomienie projektu:**
+   - Uruchom pustą aplikację na emulatorze lub fizycznym urządzeniu, aby upewnić się, że środowisko działa poprawnie.
 
 ---
 
-## 📚 **Installation**
+### **Dzień 2: Pobranie i przygotowanie danych**
+#### **Kroki:**
+1. **Pobierz dataset phishingowych e-maili:**
+   - Możesz użyć gotowych zbiorów danych:
+     - [Phishing Corpus](https://monkey.org/~jose/phishing/).
+     - [Enron Email Dataset](https://www.cs.cmu.edu/~./enron/).
 
-### **Dependencies:**
-- **Python 3.8+**
-- **Kotlin** (for Android development)
-- **Android Studio**
-- **Scikit-learn**, **FastAPI**, **Uvicorn** for Python dependencies
-- **Jetpack Compose** for Kotlin UI development
+2. **Wstępne przetwarzanie danych:**
+   - Wczytaj dane do Python:
+     ```python
+     import pandas as pd
+     # Załaduj dane z pliku CSV lub innego źródła
+     data = pd.read_csv('phishing_dataset.csv')
+     print(data.head())
+     ```
+   - Oczyść dane (np. usuń puste wiersze, specjalne znaki).
 
-### **Setting Up the Backend:**
-1. Install the necessary Python dependencies:
-   ```bash
-   pip install fastapi scikit-learn pandas numpy uvicorn
+3. **Podział danych:**
+   - Podziel dane na treści e-maili (`X`) i ich etykiety (`y`):
+     ```python
+     X = data['email_content']
+     y = data['label']  # 0 = bezpieczny, 1 = phishing
+     ```
+
+---
+
+### **Dzień 3-4: Trening modelu ML**
+#### **Kroki:**
+1. **Wstępne przetwarzanie tekstu:**
+   - Tokenizacja i usuwanie stop-słów:
+     ```python
+     from sklearn.feature_extraction.text import CountVectorizer
+     vectorizer = CountVectorizer(stop_words='english')
+     X_transformed = vectorizer.fit_transform(X)
+     ```
+
+2. **Trenowanie modelu:**
+   - Użyj prostego klasyfikatora, np. Logistic Regression:
+     ```python
+     from sklearn.linear_model import LogisticRegression
+     from sklearn.model_selection import train_test_split
+
+     X_train, X_test, y_train, y_test = train_test_split(X_transformed, y, test_size=0.2, random_state=42)
+
+     model = LogisticRegression()
+     model.fit(X_train, y_train)
+     print(f"Accuracy: {model.score(X_test, y_test)}")
+     ```
+
+3. **Konwersja modelu na TensorFlow Lite:**
+   - Przekształć model do formatu TFLite:
+     ```python
+     import tensorflow as tf
+     # Eksportuj model jako plik TFLite
+     tf_model = tf.keras.Sequential([
+         tf.keras.layers.Dense(10, activation='relu'),
+         tf.keras.layers.Dense(1, activation='sigmoid')
+     ])
+     tf_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+     # Trening modelu TFLite
+     tf_model.fit(X_train.toarray(), y_train, epochs=10, batch_size=32)
+     # Konwersja
+     converter = tf.lite.TFLiteConverter.from_keras_model(tf_model)
+     tflite_model = converter.convert()
+     with open('model.tflite', 'wb') as f:
+         f.write(tflite_model)
+     ```
+
+---
+
+### **Dzień 5-6: Testowanie modelu**
+#### **Kroki:**
+1. **Przetestuj model na danych testowych:**
+   - Upewnij się, że model działa poprawnie i osiąga akceptowalną dokładność (minimum 80%).
+
+2. **Przygotuj model do integracji z aplikacją:**
+   - Umieść plik `model.tflite` w folderze `assets` projektu Android.
+
+---
+
+### **Dzień 7: Podsumowanie tygodnia**
+1. **Zweryfikuj postępy:**
+   - Model ML jest gotowy i przetestowany.
+   - Projekt Android zawiera odpowiednią konfigurację TensorFlow Lite.
+
+2. **Plan na kolejny tydzień:**
+   - Implementacja parsowania plików `.eml`.
+   - Integracja modelu ML z aplikacją.
+
+---
+
+Jeśli potrzebujesz pomocy w realizacji któregoś z tych kroków, mogę przygotować szczegółowy kod, wyjaśnienia lub dostosować plan do Twojego tempa pracy!
